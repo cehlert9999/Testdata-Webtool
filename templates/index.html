@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testdatengenerator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1>Datenkategorie-Auswahl</h1>
+        <p>Wählen Sie zunächst die Kategorien aus, für die Sie Daten generieren möchten.</p>
+        <form id="dataCategoryForm">
+            <div class="form-group">
+                <label for="dataCategories">Kategorien:</label>
+                <select multiple class="form-control" id="dataCategories">
+                    <option>Namen</option>
+                    <option>Adressen</option>
+                    <option>E-Mails</option>
+                    <option>Telefonnummern</option>
+                    <option>IBAN/Bankdaten</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Daten generieren</button>
+        </form>
+    
+        <h2 class="mt-5">Datenschema definieren</h2>
+        <p>Nachdem Sie eine Kategorie ausgewählt haben, definieren Sie das Schema für die generierten Daten.</p>
+        <form id="schemaForm">
+            <div class="form-group">
+                <label for="categorySelect">Schema für Kategorie auswählen:</label>
+                <select class="form-control" id="categorySelect">
+                    <!-- Dynamisch geladene Optionen -->
+                </select>
+            </div>
+        </form>
+    </div>
+        
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            fetch('/api/schemas')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('categorySelect');
+                    for (const key in data) {
+                        const option = document.createElement('option');
+                        option.value = key;
+                        option.textContent = key;
+                        select.appendChild(option);
+                    }
+                });
+        });
+        </script>
+        
+
+
+
+</body>
+</html>
